@@ -4,18 +4,31 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Subject;
-import ua.nau.epf.entity.teacher.Teacher;
+import ua.nau.epf.entity.Person;
+import ua.nau.epf.entity.SemesterSubjectDetails;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class OtherUniversityDisciplineRecord extends RecordBookRecord {
-    private Subject subject;
+    @ManyToOne
+    private SemesterSubjectDetails subject;
+    @Column(nullable = false)
     private ControlForm controlForm;
+    @Column(nullable = false)
     private String universityName;
+    @Column(nullable = false)
     private String certificateDocumentName;
+    @Column(nullable = false)
     private String certificateDocumentNumber;
-    private Teacher confirmingTeacher;
+    @Column(nullable = false) //todo column definition
+    private double creditNumber;
+    @ManyToOne
+    private Person confirmingTeacher;
 }

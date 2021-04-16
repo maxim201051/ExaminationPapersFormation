@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -13,11 +14,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table
-public class Subject {
+public class AdminHelpRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String name;
+    @OneToOne
+    private Person sender;
+    @Column(nullable = false)
+    private String requestText;
+    @Column(nullable = false)
+    private LocalDate creationDate;
 }
