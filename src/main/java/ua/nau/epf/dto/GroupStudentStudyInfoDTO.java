@@ -1,5 +1,6 @@
 package ua.nau.epf.dto;
 
+import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +19,5 @@ public class GroupStudentStudyInfoDTO {
     private LocalDate startOfStudy;
     private boolean graduated;
     private LocalDate endOfStudy;
+    private Pair<String, Long> curator;
 }

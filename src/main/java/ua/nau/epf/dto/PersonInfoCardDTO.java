@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class PersonInfoCardDTO {
+public class PersonInfoCardDTO {
     private Long id;
     private String firstName;
     private String lastName;

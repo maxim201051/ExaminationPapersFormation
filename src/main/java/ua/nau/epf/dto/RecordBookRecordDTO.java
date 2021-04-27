@@ -7,7 +7,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public abstract class RecordBookRecordDTO {
+public class RecordBookRecordDTO {
+    private Long id;
     private String nationalScaleMark;
     private int numberOfPoints;
     private String ectsScaleMark;
