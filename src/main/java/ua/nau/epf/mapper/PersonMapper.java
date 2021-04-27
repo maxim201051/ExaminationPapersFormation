@@ -53,4 +53,9 @@ public class PersonMapper {
                 .add(person.getPatronymic());
         return new Pair<>(fullName.toString(), person.getId());
     }
+
+    public static Person mapFullNameIdPairToPerson(Pair<String, Long> personPair) {
+        return null;    //todo
+        //return personRepository.findById(personPair.getValue()).orElse(null);
+    }
 }

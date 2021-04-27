@@ -5,7 +5,6 @@ import ua.nau.epf.dto.StudentInfoCardDTO;
 import ua.nau.epf.entity.student.Group;
 import ua.nau.epf.entity.student.Student;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,18 +29,12 @@ public class StudentMapper {
         return entity;
     }
 
-    /**
-     * Note that Persons in list will have only id after mapping!
-     * Other fields will not be filled!
-     */
-    // todo probably add getting person from repo by id
     public static List<Student> mapStudentMapToList(Map<String, Long> studentMap) {
-        List<Student> studentList = new ArrayList<>();
-        for (Long id : studentMap.values()) {
-            Student student = new Student();
-            student.setId(id);
-            studentList.add(student);
-        }
-        return studentList;
+        return null;    //todo
+        /*return studentMap.values().stream()
+                .map(student -> studentRepository.findById(student))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());*/
     }
 }

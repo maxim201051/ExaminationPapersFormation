@@ -7,7 +7,6 @@ import ua.nau.epf.entity.teacher.AcademicStatus;
 import ua.nau.epf.entity.teacher.Position;
 import ua.nau.epf.entity.teacher.Teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,29 +38,17 @@ public class TeacherMapper {
         return entity;
     }
 
-    /**
-     * Note that Teachers in commissionMembers list will have only id after mapping!
-     * Other fields will not be filled!
-     */
-    // todo probably add getting teacher from repo by id
     public static Teacher mapFullNameIdPairToTeacher(Pair<String, Long> teacherPair) {
-        Teacher teacher = new Teacher();
-        teacher.setId(teacherPair.getValue());
-        return teacher;
+        return null;    //todo
+        //return teacherRepository.findById(teacherPair.getValue()).orElse(null);
     }
 
-    /**
-     * Note that Persons in list will have only id after mapping!
-     * Other fields will not be filled!
-     */
-    // todo probably add getting person from repo by id
     public static List<Teacher> mapTeacherMapToList(Map<String, Long> teacherMap) {
-        List<Teacher> teacherList = new ArrayList<>();
-        for (Long id : teacherMap.values()) {
-            Teacher teacher = new Teacher();
-            teacher.setId(id);
-            teacherList.add(teacher);
-        }
-        return teacherList;
+        return null;    //todo
+        /*return teacherMap.values().stream()
+                .map(teacher -> teacherRepository.findById(teacher))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());*/
     }
 }
