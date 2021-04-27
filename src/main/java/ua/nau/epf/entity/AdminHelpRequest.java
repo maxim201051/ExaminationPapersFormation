@@ -25,4 +25,6 @@ public class AdminHelpRequest {
     private String requestText;
     @Column(nullable = false)
     private LocalDate creationDate;
+    @Column(nullable = false)
+    private boolean resolved;
 }

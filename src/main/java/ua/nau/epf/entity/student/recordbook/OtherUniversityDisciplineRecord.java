@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Person;
 import ua.nau.epf.entity.SemesterSubjectDetails;
+import ua.nau.epf.entity.teacher.Teacher;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,5 +30,5 @@ public class OtherUniversityDisciplineRecord extends RecordBookRecord {
     @Column(nullable = false) //todo column definition
     private double creditNumber;
     @ManyToOne
-    private Person confirmingTeacher;
+    private Teacher confirmingTeacher;
 }

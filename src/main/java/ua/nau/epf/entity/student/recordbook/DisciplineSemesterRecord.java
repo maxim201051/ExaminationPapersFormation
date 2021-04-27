@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Person;
 import ua.nau.epf.entity.SemesterSubjectDetails;
+import ua.nau.epf.entity.teacher.Teacher;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ public class DisciplineSemesterRecord extends RecordBookRecord {
     @Column(nullable = false) //todo column definition
     private double creditNumber;
     @ManyToOne
-    private Person signedTeacher;
+    private Teacher signedTeacher;
     @Column(nullable = false, columnDefinition = "int check(passed_at_semester between 1 and 11)")
     private int passedAtSemester;
 }

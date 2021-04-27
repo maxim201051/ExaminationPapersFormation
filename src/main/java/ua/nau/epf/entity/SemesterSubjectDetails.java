@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.nau.epf.entity.teacher.Teacher;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -30,10 +30,7 @@ public class SemesterSubjectDetails {
     @Column(nullable = false, columnDefinition = "int check ( self_and_control_work_hours > 0)")
     private int selfAndControlWorkHours;
     @OneToOne(fetch = FetchType.LAZY)
-    private Person responsibleTeacher;
-    @Column(nullable = false)
-    private boolean completedDiscipline;
-    private LocalDate completionDate;
+    private Teacher responsibleTeacher;
     @Column(nullable = false)
     private boolean hasCourseWork;
     @ManyToOne(fetch = FetchType.LAZY)

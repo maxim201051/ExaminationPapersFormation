@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.nau.epf.entity.Person;
+import ua.nau.epf.entity.student.recordbook.RecordBookRecord;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +21,6 @@ public class Student extends Person {
     private String studentCode;
     @ManyToOne(fetch = FetchType.LAZY)
     private Group group;
-    @OneToOne(fetch = FetchType.LAZY)
-    private RecordBook recordBook;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<RecordBookRecord> recordBook;
 }

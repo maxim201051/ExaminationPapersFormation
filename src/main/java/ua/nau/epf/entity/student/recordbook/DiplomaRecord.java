@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Person;
 import ua.nau.epf.entity.student.EducationalDegree;
 import ua.nau.epf.entity.teacher.Teacher;
 
@@ -22,8 +21,8 @@ import java.util.List;
 public class DiplomaRecord extends RecordBookRecord {
     @Column(nullable = false)
     private String diplomaTitle;
-    @ManyToOne //todo use teacher or person type?
-    private Person supervisor;
+    @ManyToOne
+    private Teacher supervisor;
     @Column(nullable = false)
     private boolean admittedToDefense;
     @Column(nullable = false)

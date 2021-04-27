@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Person;
 import ua.nau.epf.entity.Subject;
+import ua.nau.epf.entity.teacher.Teacher;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,14 +37,12 @@ public class Group {
     @Column(nullable = false)
     private EducationForm educationForm;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Person curator;
+    private Teacher curator;
     @Column(nullable = false)
     private LocalDate startOfStudy;
     @Column(nullable = false)
     private boolean graduated;
-    private LocalDate graduationDate;//todo decide to leave list of students in group or link to group in student
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Student> students;
+    private LocalDate graduationDate;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Subject> studiedDisciplines;
 }
