@@ -17,10 +17,4 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
     show-sql: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8081/auth/realms/nau
-          jwk-set-uri: http://localhost:8083/auth/realms/nau/protocol/openid-connect/certs
   mandatory-file-encoding: UTF-8
