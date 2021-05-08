@@ -5,9 +5,6 @@ import ua.nau.epf.dto.StudentInfoCardDTO;
 import ua.nau.epf.entity.student.Group;
 import ua.nau.epf.entity.student.Student;
 
-import java.util.List;
-import java.util.Map;
-
 public class StudentMapper {
     private StudentMapper() {
     }
@@ -17,24 +14,18 @@ public class StudentMapper {
         PersonMapper.updatePersonDtoWithFieldsFromEntity(dto, entity);
         dto.setStudentCode(entity.getStudentCode());
         Group group = entity.getGroup();
-        dto.setGroup(new Pair<>(group.getGroupNumber(), group.getId()));
-        dto.setStudyInfo(GroupStudentStudyInfoMapper.getGroupStudentStudyInfoFromGroup(entity.getGroup()));
+        if (group != null) {
+            dto.setGroup(new Pair<>(group.getGroupNumber(), group.getId()));
+            dto.setStudyInfo(GroupStudentStudyInfoMapper.getGroupStudentStudyInfoFromGroup(entity.getGroup()));
+        }
         return dto;
     }
 
-    public static Student mapDtoToEntity(StudentInfoCardDTO dto) {
+    public static Student mapDtoToEntity(StudentInfoCardDTO dto, Group group) {
         Student entity = new Student();
         PersonMapper.updatePersonEntityWithFieldsFromDto(entity, dto);
         entity.setStudentCode(dto.getStudentCode());
+        entity.setGroup(group);
         return entity;
-    }
-
-    public static List<Student> mapStudentMapToList(Map<String, Long> studentMap) {
-        return null;    //todo
-        /*return studentMap.values().stream()
-                .map(student -> studentRepository.findById(student))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());*/
     }
 }

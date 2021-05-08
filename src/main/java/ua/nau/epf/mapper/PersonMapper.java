@@ -3,11 +3,10 @@ package ua.nau.epf.mapper;
 import javafx.util.Pair;
 import ua.nau.epf.dto.PersonInfoCardDTO;
 import ua.nau.epf.entity.Person;
+import ua.nau.epf.entity.user.User;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PersonMapper {
     private PersonMapper() {
@@ -18,9 +17,10 @@ public class PersonMapper {
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         dto.setPatronymic(entity.getPatronymic());
-        dto.setContactEmails(entity.getContactEmails());
-        dto.setContactPhones(entity.getContactPhones());
+        dto.setContactEmails(new ArrayList<>(entity.getContactEmails()));
+        dto.setContactPhones(new ArrayList<>(entity.getContactPhones()));
         dto.setOtherContactInfo(entity.getOtherContactInfo());
+        dto.setAccountId(entity.getAccount().getId());
     }
 
     public static Person updatePersonEntityWithFieldsFromDto(Person entity, PersonInfoCardDTO dto) {
@@ -28,22 +28,28 @@ public class PersonMapper {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setPatronymic(dto.getPatronymic());
-        entity.setContactEmails(dto.getContactEmails());
-        entity.setContactPhones(dto.getContactPhones());
+        if (dto.getContactEmails() != null) {
+            entity.setContactEmails(dto.getContactEmails());
+        } else {
+            entity.setContactEmails(Collections.emptyList());
+        }
+        if (dto.getContactPhones() != null) {
+            entity.setContactPhones(dto.getContactPhones());
+        } else {
+            entity.setContactPhones(Collections.emptyList());
+        }
         entity.setOtherContactInfo(dto.getOtherContactInfo());
+        User account = new User();
+        account.setId(dto.getAccountId());
+        entity.setAccount(account);
         return entity;
     }
 
     public static Map<String, Long> mapPersonListToMap(List<? extends Person> personList) {
-        Map<String, Long> personFullNameIdMap = new HashMap<>();
-        for (Person person : personList) {
-            StringJoiner fullName = new StringJoiner(" ")
-                    .add(person.getLastName())
-                    .add(person.getFirstName())
-                    .add(person.getPatronymic());
-            personFullNameIdMap.put(fullName.toString(), person.getId());
-        }
-        return personFullNameIdMap;
+        return personList.stream().collect(Collectors.toMap(person -> new StringJoiner(" ")
+                .add(person.getLastName())
+                .add(person.getFirstName())
+                .add(person.getPatronymic()).toString(), Person::getId));
     }
 
     public static Pair<String, Long> mapPersonToFullNameIdPair(Person person) {
@@ -52,10 +58,5 @@ public class PersonMapper {
                 .add(person.getFirstName())
                 .add(person.getPatronymic());
         return new Pair<>(fullName.toString(), person.getId());
-    }
-
-    public static Person mapFullNameIdPairToPerson(Pair<String, Long> personPair) {
-        return null;    //todo
-        //return personRepository.findById(personPair.getValue()).orElse(null);
     }
 }

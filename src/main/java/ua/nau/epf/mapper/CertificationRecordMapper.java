@@ -2,6 +2,9 @@ package ua.nau.epf.mapper;
 
 import ua.nau.epf.dto.CertificationRecordDTO;
 import ua.nau.epf.entity.student.recordbook.CertificationRecord;
+import ua.nau.epf.entity.teacher.Teacher;
+
+import java.util.List;
 
 public class CertificationRecordMapper {
     private CertificationRecordMapper() {
@@ -15,11 +18,11 @@ public class CertificationRecordMapper {
         return dto;
     }
 
-    public static CertificationRecord mapDtoToEntity(CertificationRecordDTO dto) {
+    public static CertificationRecord mapDtoToEntity(CertificationRecordDTO dto, List<Teacher> commissionMembers) {
         CertificationRecord entity = new CertificationRecord();
         RecordBookRecordMapper.updateRecordEntityWithFieldsFromDto(entity, dto);
         entity.setCertificationName(dto.getCertificationName());
-        entity.setCommissionMembers(TeacherMapper.mapTeacherMapToList(dto.getCommissionMembers()));
+        entity.setCommissionMembers(commissionMembers);
         return entity;
     }
 }

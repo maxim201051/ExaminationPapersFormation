@@ -2,9 +2,10 @@ package ua.nau.epf.mapper;
 
 import ua.nau.epf.dto.PracticeRecordDTO;
 import ua.nau.epf.entity.student.recordbook.PracticeRecord;
+import ua.nau.epf.entity.teacher.Teacher;
 
 public class PracticeMapper {
-    public PracticeRecordDTO mapEntityToDto(PracticeRecord entity) {
+    public static PracticeRecordDTO mapEntityToDto(PracticeRecord entity) {
         PracticeRecordDTO dto = new PracticeRecordDTO();
         RecordBookRecordMapper.updateRecordDtoWithFieldsFromEntity(dto, entity);
         dto.setPracticeName(entity.getPracticeName());
@@ -17,7 +18,7 @@ public class PracticeMapper {
         return dto;
     }
 
-    public PracticeRecord mapDtoToEntity(PracticeRecordDTO dto) {
+    public static PracticeRecord mapDtoToEntity(PracticeRecordDTO dto, Teacher signedTeacher) {
         PracticeRecord entity = new PracticeRecord();
         RecordBookRecordMapper.updateRecordEntityWithFieldsFromDto(entity, dto);
         entity.setPracticeName(dto.getPracticeName());
@@ -26,7 +27,7 @@ public class PracticeMapper {
         entity.setDateIntervalString(dto.getDateIntervalString());
         entity.setWorkKind(dto.getWorkKind());
         entity.setCreditNumber(dto.getCreditNumber());
-        entity.setSignedTeacher(TeacherMapper.mapFullNameIdPairToTeacher(dto.getSignedTeacher()));
+        entity.setSignedTeacher(signedTeacher);
         return entity;
     }
 }
