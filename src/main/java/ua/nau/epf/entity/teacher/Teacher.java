@@ -27,6 +27,6 @@ public class Teacher extends Person {
     @Column(nullable = false)
     private LocalDate hiringDate;
     @Column(nullable = false)
-    private boolean dismissed;
+    private Boolean dismissed;
     private LocalDate dismissalDate;
 }

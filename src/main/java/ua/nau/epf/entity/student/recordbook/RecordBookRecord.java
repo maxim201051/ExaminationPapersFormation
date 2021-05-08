@@ -20,12 +20,11 @@ public class RecordBookRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-    @Column(nullable = false)
     private NationalScale nationalScaleMark;
-    @Column(nullable = false, columnDefinition = "int check((number_of_points between 60 and 100) or number_of_points=0)")
-    private int numberOfPoints;
-    @Column(nullable = false)
+    @Column(columnDefinition = "int check((number_of_points between 60 and 100) or number_of_points=0)")
+    private Integer numberOfPoints;
     private ECTSScale ectsScaleMark;
-    @Column(nullable = false)
     private LocalDate recordDate;
+    @Column(nullable = false)
+    private Boolean hasDebt;
 }

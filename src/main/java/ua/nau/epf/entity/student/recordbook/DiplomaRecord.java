@@ -7,10 +7,7 @@ import lombok.Setter;
 import ua.nau.epf.entity.student.EducationalDegree;
 import ua.nau.epf.entity.teacher.Teacher;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -18,15 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table
 public class DiplomaRecord extends RecordBookRecord {
     @Column(nullable = false)
     private String diplomaTitle;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Teacher supervisor;
     @Column(nullable = false)
-    private boolean admittedToDefense;
+    private Boolean admittedToDefense;
     @Column(nullable = false)
     private EducationalDegree assignedQualification;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Teacher> commissionMembers;
 }

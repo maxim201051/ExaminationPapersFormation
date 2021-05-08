@@ -2,5 +2,6 @@ package ua.nau.epf.entity.student.recordbook;
 
 public enum ControlForm {
     CREDIT,
-    EXAM
+    EXAM,
+    COURSE_WORK
 }

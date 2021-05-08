@@ -7,24 +7,21 @@ import lombok.Setter;
 import ua.nau.epf.entity.SemesterSubjectDetails;
 import ua.nau.epf.entity.teacher.Teacher;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table
 public class DisciplineSemesterRecord extends RecordBookRecord {
     @Column(nullable = false)
     private ControlForm controlForm;
-    @ManyToOne
-    private SemesterSubjectDetails subject;
-    @Column(nullable = false) //todo column definition
-    private double creditNumber;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SemesterSubjectDetails relatedSubject;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Teacher signedTeacher;
     @Column(nullable = false, columnDefinition = "int check(passed_at_semester between 1 and 11)")
-    private int passedAtSemester;
+    private Integer passedAtSemester;
 }

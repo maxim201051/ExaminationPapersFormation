@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.nau.epf.entity.Subject;
+import ua.nau.epf.entity.SemesterSubjectDetails;
 import ua.nau.epf.entity.teacher.Teacher;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String groupNumber;
     @Column(nullable = false, columnDefinition = "int check(course between 1 and 6)")
-    private int course;
+    private Integer course;
     @Column(nullable = false)
     private EducationalDegree educationalDegree;
     @Column(nullable = false)
@@ -41,8 +41,8 @@ public class Group {
     @Column(nullable = false)
     private LocalDate startOfStudy;
     @Column(nullable = false)
-    private boolean graduated;
+    private Boolean graduated;
     private LocalDate graduationDate;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Subject> studiedDisciplines;
+    private List<SemesterSubjectDetails> studiedDisciplines;
 }

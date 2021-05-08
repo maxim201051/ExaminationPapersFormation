@@ -19,12 +19,12 @@ public class AdminHelpRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Person sender;
     @Column(nullable = false)
     private String requestText;
     @Column(nullable = false)
     private LocalDate creationDate;
     @Column(nullable = false)
-    private boolean resolved;
+    private Boolean resolved;
 }
