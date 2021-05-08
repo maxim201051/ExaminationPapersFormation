@@ -5,5 +5,4 @@ import ua.nau.epf.entity.Person;
 
 @Repository
 public interface PersonRepository extends PersonBaseRepository<Person> {
-
 }
