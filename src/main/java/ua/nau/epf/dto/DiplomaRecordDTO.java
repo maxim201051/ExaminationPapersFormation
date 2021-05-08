@@ -11,7 +11,7 @@ import java.util.Map;
 public class DiplomaRecordDTO extends RecordBookRecordDTO {
     private String diplomaTitle;
     private Pair<String, Long> supervisor;
-    private boolean admittedToDefense;
+    private Boolean admittedToDefense;
     private String assignedQualification;
     private Map<String, Long> commissionMembers;
 }

@@ -13,5 +13,5 @@ public class AdminHelpRequestDTO {
     private Pair<String, Long> sender;
     private String requestText;
     private LocalDate creationDate;
-    private boolean resolved;
+    private Boolean resolved;
 }

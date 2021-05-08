@@ -10,7 +10,8 @@ import java.time.LocalDate;
 public class RecordBookRecordDTO {
     private Long id;
     private String nationalScaleMark;
-    private int numberOfPoints;
+    private Integer numberOfPoints;
     private String ectsScaleMark;
     private LocalDate recordDate;
+    private Boolean hasDebt;
 }

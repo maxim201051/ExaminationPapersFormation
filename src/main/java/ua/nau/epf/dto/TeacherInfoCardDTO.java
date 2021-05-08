@@ -12,6 +12,6 @@ public class TeacherInfoCardDTO extends PersonInfoCardDTO {
     private String academicDegree;
     private String academicStatus;
     private LocalDate hiringDate;
-    private boolean dismissed;
+    private Boolean dismissed;
     private LocalDate dismissalDate;
 }

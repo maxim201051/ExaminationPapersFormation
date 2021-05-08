@@ -9,9 +9,9 @@ import lombok.Setter;
 public class PracticeRecordDTO extends RecordBookRecordDTO {
     private String practiceName;
     private String organizationName;
-    private int passedOnCourse;
+    private Integer passedOnCourse;
     private String dateIntervalString;
     private String workKind;
-    private double creditNumber;
+    private Double creditNumber;
     private Pair<String, Long> signedTeacher;
 }

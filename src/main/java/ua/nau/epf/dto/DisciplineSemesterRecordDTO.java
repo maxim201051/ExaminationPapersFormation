@@ -9,7 +9,6 @@ import lombok.Setter;
 public class DisciplineSemesterRecordDTO extends RecordBookRecordDTO {
     private String controlForm;
     private SubjectDetailsDTO subject;
-    private double creditNumber;
     private Pair<String, Long> signedTeacher;
-    private int passedAtSemester;
+    private Integer passedAtSemester;
 }

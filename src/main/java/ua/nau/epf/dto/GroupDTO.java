@@ -9,7 +9,7 @@ import java.util.Map;
 @Setter
 public class GroupDTO {
     private Long id;
+    private String groupNumber;
     private GroupStudentStudyInfoDTO studyInfo;
-    //key - full name, value - id
     private Map<String, Long> students;
 }

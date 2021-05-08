@@ -12,6 +12,6 @@ public class OtherUniversityDisciplineRecordDTO extends RecordBookRecordDTO {
     private String universityName;
     private String certificateDocumentName;
     private String certificateDocumentNumber;
-    private double creditNumber;
+    private Double creditNumber;
     private Pair<String, Long> confirmingTeacher;
 }
