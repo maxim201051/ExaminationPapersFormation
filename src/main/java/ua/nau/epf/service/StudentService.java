@@ -91,4 +91,9 @@ public class StudentService {
         return StudentMapper.mapEntityToDto(studentRepository.save(
                 StudentMapper.mapDtoToEntity(student, group)));//fixme null pointer when group is null
     }
+
+    @Transactional
+    public StudentInfoCardDTO findStudentDtoByAccount(User user) throws QueryReturnedNoResultsException {
+        return StudentMapper.mapEntityToDto(findStudentByAccount(user));
+    }
 }

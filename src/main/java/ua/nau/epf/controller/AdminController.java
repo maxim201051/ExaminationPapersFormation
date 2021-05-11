@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ua.nau.epf.dto.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+    private final PasswordEncoder passwordEncoder;
     private final GroupService groupService;
     private final StudentService studentService;
     private final TeacherService teacherService;
@@ -25,13 +27,14 @@ public class AdminController {
     @Autowired
     public AdminController(GroupService groupService, StudentService studentService, TeacherService teacherService,
                            UserService userService, AdminHelpRequestService adminHelpRequestService,
-                           SubjectService subjectService) {
+                           SubjectService subjectService, PasswordEncoder passwordEncoder) {
         this.groupService = groupService;
         this.studentService = studentService;
         this.teacherService = teacherService;
         this.userService = userService;
         this.adminHelpRequestService = adminHelpRequestService;
         this.subjectService = subjectService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/teacher")
@@ -39,6 +42,7 @@ public class AdminController {
     public ResponseEntity<TeacherInfoCardDTO> addTeacher(@RequestBody TeacherUserDTO teacherUserDTO) {
         ResponseEntity<TeacherInfoCardDTO> responseEntity;
         try {
+            teacherUserDTO.getUser().setPassword(passwordEncoder.encode(teacherUserDTO.getUser().getPassword()));
             teacherUserDTO = userService.addUser(teacherUserDTO);
             responseEntity = new ResponseEntity<>(teacherService.saveOrUpdate(
                     teacherUserDTO.getTeacher()), HttpStatus.CREATED);
@@ -64,6 +68,7 @@ public class AdminController {
     public ResponseEntity<StudentInfoCardDTO> addStudent(@RequestBody StudentUserDTO studentUserDTO) {
         ResponseEntity<StudentInfoCardDTO> responseEntity;
         try {
+            studentUserDTO.getUser().setPassword(passwordEncoder.encode(studentUserDTO.getUser().getPassword()));
             studentUserDTO = userService.addUser(studentUserDTO);
             StudentInfoCardDTO studentDto = studentUserDTO.getStudent();
             responseEntity = new ResponseEntity<>(studentService.saveOrUpdateStudent(

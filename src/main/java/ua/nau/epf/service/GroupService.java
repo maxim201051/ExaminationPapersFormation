@@ -14,19 +14,23 @@ import ua.nau.epf.exception.QueryReturnedNoResultsException;
 import ua.nau.epf.mapper.GroupMapper;
 import ua.nau.epf.mapper.GroupToSubjectRelMapper;
 import ua.nau.epf.repository.GroupRepository;
+import ua.nau.epf.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
     private final GroupRepository groupRepository;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public GroupService(GroupRepository groupRepository) {
+    public GroupService(GroupRepository groupRepository, StudentRepository studentRepository) {
         this.groupRepository = groupRepository;
+        this.studentRepository = studentRepository;
     }
 
     private Group findGroupById(Long id) throws QueryReturnedNoResultsException {
@@ -66,5 +70,16 @@ public class GroupService {
     @Transactional
     public Group findGroupById(Pair<String, Long> groupNumberIdPair) throws QueryReturnedNoResultsException { //fixme pair can be null
         return findGroupById(groupNumberIdPair.getValue());
+    }
+
+    public List<Student> findStudentsByGroupId(Long id) {
+        return studentRepository.findAllByGroup_Id(id);
+    }
+
+    @Transactional
+    public List<GroupDTO> findAllGroups() {
+        return groupRepository.findAll().stream()
+                .map(group -> GroupMapper.mapEntityToDto(group, findStudentsByGroupId(group.getId())))
+                .collect(Collectors.toList());
     }
 }

@@ -59,4 +59,9 @@ public class TeacherService {
     public TeacherInfoCardDTO saveOrUpdate(TeacherInfoCardDTO teacherDto) {
         return TeacherMapper.mapEntityToDto(teacherRepository.save(TeacherMapper.mapDtoToEntity(teacherDto)));
     }
+
+    @Transactional
+    public TeacherInfoCardDTO findTeacherDtoByAccount(User user) throws QueryReturnedNoResultsException {
+        return TeacherMapper.mapEntityToDto(findTeacherByAccount(user));
+    }
 }

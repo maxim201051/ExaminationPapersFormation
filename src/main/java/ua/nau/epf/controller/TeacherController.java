@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ua.nau.epf.dto.ExaminationPaperDTO;
 import ua.nau.epf.dto.GroupToSubjectRelDTO;
+import ua.nau.epf.dto.TeacherInfoCardDTO;
 import ua.nau.epf.entity.user.User;
 import ua.nau.epf.exception.QueryReturnedNoResultsException;
 import ua.nau.epf.service.GroupService;
@@ -34,11 +35,20 @@ public class TeacherController {
         this.studentService = studentService;
     }
 
+    @GetMapping("/my-info")
+    public ResponseEntity<TeacherInfoCardDTO> findCurrentTeacher(@AuthenticationPrincipal User user) {
+        ResponseEntity<TeacherInfoCardDTO> responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(teacherService.findTeacherDtoByAccount(user), HttpStatus.OK);
+        } catch (QueryReturnedNoResultsException e) {
+            responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return responseEntity;
+    }
+
     @GetMapping("/taught-groups")
     @Transactional
-    public ResponseEntity<List<GroupToSubjectRelDTO>> findGroupsWhereCurrentTeacherTaught(/*@AuthenticationPrincipal User user*/) {
-        User user = new User();
-        user.setId(38L);
+    public ResponseEntity<List<GroupToSubjectRelDTO>> findGroupsWhereCurrentTeacherTaught(@AuthenticationPrincipal User user) {
         ResponseEntity<List<GroupToSubjectRelDTO>> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(
@@ -54,13 +64,13 @@ public class TeacherController {
 
     @GetMapping("/examination-paper")
     public ResponseEntity<ExaminationPaperDTO> findExaminationPaper(@RequestParam Long groupId,
-                                                                    @RequestParam Long subjectId,
+                                                                    @RequestParam Long subjectDetailsId,
                                                                     @RequestParam Integer semester,
                                                                     @RequestParam String type) {
         ResponseEntity<ExaminationPaperDTO> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(subjectService.findExaminationPaperForGroupAndSubject(
-                    groupId, subjectId, semester, type), HttpStatus.OK);
+                    groupId, subjectDetailsId, semester, type), HttpStatus.OK);
         } catch (QueryReturnedNoResultsException e) {
             responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -1,6 +1,9 @@
 package ua.nau.epf.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.nau.epf.dto.StudentUserDTO;
 import ua.nau.epf.dto.TeacherUserDTO;
@@ -10,7 +13,7 @@ import ua.nau.epf.mapper.UserMapper;
 import ua.nau.epf.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private static final String USER_DEFAULT_PROFILE_PICTURE_PATH = "/profile_pictures/standard_profile_picture.png";
     private final UserRepository userRepository;
 
@@ -43,5 +46,11 @@ public class UserService {
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         return user;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() ->
+                new UsernameNotFoundException("user " + username + " was not found!"));
     }
 }

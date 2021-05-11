@@ -61,6 +61,11 @@ public class GeneralController {
         return responseEntity;
     }
 
+    @GetMapping("/group/all")
+    public ResponseEntity<List<GroupDTO>> findAllGroups() {
+        return new ResponseEntity<>(groupService.findAllGroups(), HttpStatus.OK);
+    }
+
     @GetMapping("/teacher/all")
     public ResponseEntity<List<TeacherInfoCardDTO>> findAllTeachers() {
         return new ResponseEntity<>(teacherService.findAllTeachers(), HttpStatus.OK);

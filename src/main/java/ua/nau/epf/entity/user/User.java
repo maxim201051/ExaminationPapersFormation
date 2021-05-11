@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String password;
     @Column(nullable = false, columnDefinition = "varchar(255) default '/profile_pictures/standard_profile_picture.png'")
     private String profilePictureFileName; //todo move this field to person
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
