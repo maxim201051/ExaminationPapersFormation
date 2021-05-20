@@ -8,6 +8,7 @@ import ua.nau.epf.dto.TeacherInfoCardDTO;
 import ua.nau.epf.entity.teacher.Teacher;
 import ua.nau.epf.entity.user.User;
 import ua.nau.epf.exception.QueryReturnedNoResultsException;
+import ua.nau.epf.mapper.PersonMapper;
 import ua.nau.epf.mapper.TeacherMapper;
 import ua.nau.epf.repository.TeacherRepository;
 
@@ -56,12 +57,18 @@ public class TeacherService {
         return teachers;
     }
 
-    public TeacherInfoCardDTO saveOrUpdate(TeacherInfoCardDTO teacherDto) {
-        return TeacherMapper.mapEntityToDto(teacherRepository.save(TeacherMapper.mapDtoToEntity(teacherDto)));
+    public Long saveOrUpdate(TeacherInfoCardDTO teacherDto) {
+        return teacherRepository.save(TeacherMapper.mapDtoToEntity(teacherDto)).getId();
     }
 
     @Transactional
     public TeacherInfoCardDTO findTeacherDtoByAccount(User user) throws QueryReturnedNoResultsException {
         return TeacherMapper.mapEntityToDto(findTeacherByAccount(user));
+    }
+
+    @Transactional
+    public List<Pair<String, Long>> findAllTeachersInPairFormat() {
+        return teacherRepository.findAll().stream()
+                .map(PersonMapper::mapPersonToFullNameIdPair).collect(Collectors.toList());
     }
 }

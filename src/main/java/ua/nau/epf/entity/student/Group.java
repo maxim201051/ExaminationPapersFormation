@@ -43,6 +43,6 @@ public class Group {
     @Column(nullable = false)
     private Boolean graduated;
     private LocalDate graduationDate;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<SemesterSubjectDetails> studiedDisciplines;
 }

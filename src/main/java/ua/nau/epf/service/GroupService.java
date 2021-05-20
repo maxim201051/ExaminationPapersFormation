@@ -53,18 +53,18 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupDTO addGroup(GroupDTO group, Teacher curator) {
-        return saveOrUpdate(group, curator, Collections.emptyList());
+    public Long addGroup(GroupDTO group, Teacher curator) {
+        return saveOrUpdate(group, curator).getId();
     }
 
     @Transactional
-    public GroupDTO updateGroup(GroupDTO group, Teacher curator, List<Student> students) {
-        return saveOrUpdate(group, curator, students);
+    public Long updateGroup(GroupDTO group, Teacher curator) {
+        return saveOrUpdate(group, curator).getId();
     }
 
     @Transactional
-    public GroupDTO saveOrUpdate(GroupDTO group, Teacher curator, List<Student> students) {
-        return GroupMapper.mapEntityToDto(groupRepository.save(GroupMapper.mapDtoToEntity(group, curator)), students);
+    public Group saveOrUpdate(GroupDTO group, Teacher curator) {
+        return groupRepository.save(GroupMapper.mapDtoToEntity(group, curator));
     }
 
     @Transactional
@@ -81,5 +81,11 @@ public class GroupService {
         return groupRepository.findAll().stream()
                 .map(group -> GroupMapper.mapEntityToDto(group, findStudentsByGroupId(group.getId())))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<Pair<String, Long>> findAllGroupsInPairFormat() {
+        return groupRepository.findAll().stream()
+                .map(GroupMapper::mapGroupToGroupNumberIdPair).collect(Collectors.toList());
     }
 }

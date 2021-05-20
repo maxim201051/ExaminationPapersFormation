@@ -117,7 +117,8 @@ public class SubjectService {
         return findAllSubjects();
     }
 
-    public GroupDTO assignSubjectToGroup(GroupToSubjectRelDTO groupToSubjectRelDTO, List<Student> students) throws QueryReturnedNoResultsException {
+    @Transactional
+    public Long assignSubjectToGroup(GroupToSubjectRelDTO groupToSubjectRelDTO, List<Student> students) throws QueryReturnedNoResultsException {
         Group group = groupRepository.findById(groupToSubjectRelDTO.getGroup().getValue())
                 .orElseThrow(QueryReturnedNoResultsException::new);
         SemesterSubjectDetails subjectDetails = semesterSubjectDetailsRepository.findById(
@@ -134,7 +135,7 @@ public class SubjectService {
             addExaminationPaper(group, subjectDetails, teacher, students, ControlForm.COURSE_WORK);
         }
 
-        return GroupMapper.mapEntityToDto(group, students);
+        return group.getId();
     }
 
     public void addExaminationPaper(Group group, SemesterSubjectDetails subjectDetails, Teacher teacher,

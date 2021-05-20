@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table
-public class RecordBookRecord {
+public class RecordBookRecord { //todo make all mark scales calculable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)

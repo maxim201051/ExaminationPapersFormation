@@ -87,9 +87,8 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentInfoCardDTO saveOrUpdateStudent(StudentInfoCardDTO student, Group group) {
-        return StudentMapper.mapEntityToDto(studentRepository.save(
-                StudentMapper.mapDtoToEntity(student, group)));//fixme null pointer when group is null
+    public Long saveOrUpdateStudent(StudentInfoCardDTO student, Group group) {
+        return studentRepository.save(StudentMapper.mapDtoToEntity(student, group)).getId();//fixme null pointer when group is null
     }
 
     @Transactional

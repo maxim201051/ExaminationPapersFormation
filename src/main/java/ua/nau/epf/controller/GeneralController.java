@@ -3,12 +3,12 @@ package ua.nau.epf.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.nau.epf.dto.AdminHelpRequestDTO;
-import ua.nau.epf.dto.GroupDTO;
-import ua.nau.epf.dto.StudentInfoCardDTO;
-import ua.nau.epf.dto.TeacherInfoCardDTO;
+import ua.nau.epf.dto.*;
+import ua.nau.epf.entity.user.User;
 import ua.nau.epf.exception.QueryReturnedNoResultsException;
+import ua.nau.epf.mapper.UserMapper;
 import ua.nau.epf.service.AdminHelpRequestService;
 import ua.nau.epf.service.GroupService;
 import ua.nau.epf.service.StudentService;
@@ -94,5 +94,10 @@ public class GeneralController {
             responseEntity = new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return responseEntity;
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal User user) {
+        return new ResponseEntity<>(UserMapper.mapEntityToDto(user), HttpStatus.OK);
     }
 }

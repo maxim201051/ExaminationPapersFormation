@@ -37,10 +37,15 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping("/teacher/all-pair")
+    public ResponseEntity<List<Pair<String, Long>>> findAllTeachersInPairFormat() {
+        return new ResponseEntity<>(teacherService.findAllTeachersInPairFormat(), HttpStatus.OK);
+    }
+
     @PostMapping("/teacher")
     @Transactional //fixme transaction doesn't work fine user account addition will not be reverted if teacher not saved
-    public ResponseEntity<TeacherInfoCardDTO> addTeacher(@RequestBody TeacherUserDTO teacherUserDTO) {
-        ResponseEntity<TeacherInfoCardDTO> responseEntity;
+    public ResponseEntity<Long> addTeacher(@RequestBody TeacherUserDTO teacherUserDTO) {
+        ResponseEntity<Long> responseEntity;
         try {
             teacherUserDTO.getUser().setPassword(passwordEncoder.encode(teacherUserDTO.getUser().getPassword()));
             teacherUserDTO = userService.addUser(teacherUserDTO);
@@ -53,8 +58,8 @@ public class AdminController {
     }
 
     @PutMapping("/teacher")
-    public ResponseEntity<TeacherInfoCardDTO> updateTeacher(@RequestBody TeacherInfoCardDTO teacher) {
-        ResponseEntity<TeacherInfoCardDTO> responseEntity;
+    public ResponseEntity<Long> updateTeacher(@RequestBody TeacherInfoCardDTO teacher) {
+        ResponseEntity<Long> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(teacherService.saveOrUpdate(teacher), HttpStatus.OK);
         } catch (Exception e) {
@@ -65,8 +70,8 @@ public class AdminController {
 
     @PostMapping("/student")
     @Transactional
-    public ResponseEntity<StudentInfoCardDTO> addStudent(@RequestBody StudentUserDTO studentUserDTO) {
-        ResponseEntity<StudentInfoCardDTO> responseEntity;
+    public ResponseEntity<Long> addStudent(@RequestBody StudentUserDTO studentUserDTO) {
+        ResponseEntity<Long> responseEntity;
         try {
             studentUserDTO.getUser().setPassword(passwordEncoder.encode(studentUserDTO.getUser().getPassword()));
             studentUserDTO = userService.addUser(studentUserDTO);
@@ -82,8 +87,8 @@ public class AdminController {
     }
 
     @PutMapping("/student")
-    public ResponseEntity<StudentInfoCardDTO> updateStudent(@RequestBody StudentInfoCardDTO studentDto) {
-        ResponseEntity<StudentInfoCardDTO> responseEntity;
+    public ResponseEntity<Long> updateStudent(@RequestBody StudentInfoCardDTO studentDto) {
+        ResponseEntity<Long> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(studentService.saveOrUpdateStudent(
                     studentDto, groupService.findGroupById(studentDto.getGroup())), HttpStatus.OK);
@@ -93,9 +98,14 @@ public class AdminController {
         return responseEntity;
     }
 
+    @GetMapping("/group/all-pair")
+    public ResponseEntity<List<Pair<String, Long>>> findAllGroupsInPairFormat() {
+        return new ResponseEntity<>(groupService.findAllGroupsInPairFormat(), HttpStatus.OK);
+    }
+
     @PostMapping("/group")
-    public ResponseEntity<GroupDTO> addGroup(@RequestBody GroupDTO group) {
-        ResponseEntity<GroupDTO> responseEntity;
+    public ResponseEntity<Long> addGroup(@RequestBody GroupDTO group) {
+        ResponseEntity<Long> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(groupService.addGroup(group,
                     teacherService.findTeacherById(group.getStudyInfo().getCurator())), HttpStatus.CREATED);
@@ -107,12 +117,11 @@ public class AdminController {
     }
 
     @PutMapping("/group")
-    public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO group) {
-        ResponseEntity<GroupDTO> responseEntity;
+    public ResponseEntity<Long> updateGroup(@RequestBody GroupDTO group) {
+        ResponseEntity<Long> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(groupService.updateGroup(group,
-                    teacherService.findTeacherById(group.getStudyInfo().getCurator()),
-                    studentService.findStudentsByGroup(group)), HttpStatus.OK);
+                    teacherService.findTeacherById(group.getStudyInfo().getCurator())), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             responseEntity = new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -196,8 +205,8 @@ public class AdminController {
 
     @PostMapping("/assign-subject-details-to-group")
     @Transactional
-    public ResponseEntity<GroupDTO> assignSubjectToGroup(@RequestBody GroupToSubjectRelDTO groupToSubjectRelDTO) {
-        ResponseEntity<GroupDTO> responseEntity;
+    public ResponseEntity<Long> assignSubjectToGroup(@RequestBody GroupToSubjectRelDTO groupToSubjectRelDTO) {
+        ResponseEntity<Long> responseEntity;
         try {
             responseEntity = new ResponseEntity<>(subjectService.assignSubjectToGroup(groupToSubjectRelDTO,
                     studentService.findStudentsByGroupId(groupToSubjectRelDTO.getGroup().getValue())), HttpStatus.OK);
